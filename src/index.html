@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <title>FRC Dashboard</title>
+    <link href="css/style.css" rel="stylesheet">
+</head>
+
+<body>
+    <div class="panel" id="timer">2:15</div>
+    <div class="panel" id="status">
+        <!-- Tells whether robot is connected to dashboard. -->
+        <div id="robot-state">Unknown state</div>
+        <button id="connect-button">Connect</button>
+    </div>
+    <!-- You'll need to mess around with the CSS of #camera (found in css/style.css) to get it to work.
+        More explanation in that CSS rule. -->
+    <div class="panel" id="camera"></div>
+
+    <div class="panel" id="dash-body">
+        <h4 class="panel-title">1018 Dashboard</h4>
+
+        <div class="subpanel" id="match-info">
+            <h4 class="subpanel-title">Match Info</h4>
+
+
+        </div>
+        <div class="subpanel" id="battery-readout">
+            <text class="subpanel-title">Battery</text>
+
+        </div>
+    </div>
+    <!-- The sidebar of the dashboard. Designed for smaller control elements like selection boxes and small buttons. -->
+    <aside class="panel" id="sidebar">
+        <h4 class="panel-title">Robot Configuration</h4>
+        <div class="subpanel" id="auto-selection-container">
+            <h4 class="subpanel-title">Autonomous Selection</h4>
+            <select id="auto-select">
+                <option>No auto modes found</option>
+                <!-- This gets populated by JS -->
+            </select>
+            <h4 class="subpanel-title">Selected Auto</h4>
+            <input type="text" id="auto-readout" disabled>
+        </div>
+        <img class="subpanel" id="team-logo" src="../images/1018_logo.svg">
+    </aside>
+    <div id="login">
+        <input id="connect-address" type="text" value="localhost" disabled>
+        <button id="connect" disabled>Connecting</button>
+    </div>
+    <script src="networktables/networktables.js"></script>
+    <script src="connection.js"></script>
+    <script src="ui.js"></script>
+</body>
+
+</html>

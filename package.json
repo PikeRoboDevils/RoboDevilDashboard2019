@@ -1,0 +1,32 @@
+{
+  "name": "robodevil-dashboard-2019",
+  "version": "0.1.0",
+  "description": "Robot control dashboard boilerplate for FRC.",
+  "main": "src/main.js",
+  "scripts": {
+    "start": "electron .",
+    "package-mac": "electron-packager . --platform=darwin --icon=images/icon.icns --out dist/",
+    "package-linux": "electron-packager . --platform=linux --icon=images/icon.png --out dist/",
+    "package-win": "electron-packager . --platform=win32 --icon=images/icon.ico --out dist/"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/firecrafty/RoboDevilDashboard2019"
+  },
+  "author": "Ryan Blue",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/firecrafty/RoboDevilDashboard2019/issues"
+  },
+  "devDependencies": {
+    "electron": "^4.0.1",
+    "electron-builder": "^20.38.4",
+    "electron-packager": "^13.0.1"
+  },
+  "dependencies": {
+    "wpilib-nt-client": "^1.7.1"
+  },
+  "build": {
+    "appId": "com.pikerobodevils.2019dashboard"
+  }
+}
