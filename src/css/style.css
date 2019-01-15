@@ -26,6 +26,7 @@ button, input[type="text"], input[type="number"], select, option {
     padding: 6px 8px;
     cursor: pointer;
     outline: 0;
+    border-radius: 5px;
 }
 
 select {
@@ -45,7 +46,7 @@ input[type="checkbox"] {
 }
 
 .panel {
-    padding: 10px;
+    padding: 7px;
     border: solid black 1px;
     position: fixed;
     overflow: scroll;
@@ -56,17 +57,25 @@ input[type="checkbox"] {
 }
 
 .subpanel {
-    padding: 10px;
+    position: relative;
+    padding: 5px 10px;
     background-color: #444;
     border-radius: 5px;
-    margin: 10px 0px;
+    margin: 7px 0px;
 }
 .subpanel > * {
-    margin: 3px;
+    margin: 2px;
 }
 
 .subpanel-title {
+    font-size: 18px;
+}
+. {
+    display: block;
+}
 
+.mi-label {
+    font-weight: bold;
 }
 
 #timer {
@@ -92,12 +101,15 @@ input[type="checkbox"] {
     height: 100vh;
     width: 20vw;
 }
+#auto-readout {
+    cursor: default;
+}
 #camera {
     padding: 0;
     position: fixed;
     bottom: 0;
     left: 0;
-    width: 50vw;
+    width: 60vw;
     height: 80vh;
     overflow: hidden;
     background-color: #333;
@@ -108,9 +120,9 @@ input[type="checkbox"] {
 }
 #dash-body {
     top: 0;
-    left: 50vw;
+    right: 20vw;
     height: 100vh;
-    width: 30vw;
+    width: 20vw;
 }
 
 #login {
@@ -142,9 +154,17 @@ body.login #login {
 #team-logo {
     position: absolute;
     padding: 0;
-    margin: 10px;
+    margin: 7px;
     bottom: 0;
     right: 0;
-    width: calc(100% - 20px);
+    width: calc(100% - 14px);
     height: auto;
 }
+
+#battery-text {
+    font-size: 40px;
+}
+#connection-panel > *{
+    display: inline;
+}
+

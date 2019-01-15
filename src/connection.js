@@ -28,8 +28,7 @@ onkeydown = key => {
 function onRobotConnection(connected) {
     var state = connected ? 'Robot connected!' : 'Robot disconnected.';
     console.log(state);
-    ui.robotState.textContent = state;
-
+    ui.robotState.connection.textContent = state;
     buttonConnect.onclick = () => {
         document.body.classList.toggle('login', true);
         loginShown = true;

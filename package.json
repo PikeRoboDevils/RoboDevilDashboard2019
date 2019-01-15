@@ -5,14 +5,16 @@
   "main": "src/main.js",
   "scripts": {
     "start": "electron .",
-    "package-mac": "electron-packager . --platform=darwin --icon=images/icon.icns --out dist/",
-    "package-linux": "electron-packager . --platform=linux --icon=images/icon.png --out dist/",
-    "package-win": "electron-packager . --platform=win32 --icon=images/icon.ico --out dist/"
+    "postinstall": "install-app-deps",
+    "pack": "build --dir",
+    "dist": "build",
+    "test": "echo No tests to run."
   },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/firecrafty/RoboDevilDashboard2019"
   },
+  "homepage": "https://github.com/firecrafty/RoboDevilDashboard2019",
   "author": "Ryan Blue",
   "license": "MIT",
   "bugs": {
@@ -24,9 +26,45 @@
     "electron-packager": "^13.0.1"
   },
   "dependencies": {
+    "dotenv": "^6.2.0",
     "wpilib-nt-client": "^1.7.1"
   },
   "build": {
-    "appId": "com.pikerobodevils.2019dashboard"
+    "appId": "com.pikerobodevils.2019dashboard",
+    "productName": "RoboDevil Dashboard",
+    "copyright": "Copyright © 2019 Pike RoboDevils",
+    "win": {
+      "target": [
+        {
+          "target": "nsis",
+          "arch": [
+            "x64",
+            "ia32"
+          ]
+        },
+        {
+          "target": "portable",
+          "arch": [
+            "x64",
+            "ia32"
+          ]
+        }
+      ],
+      "icon": "images/logo.png"
+    },
+    "nsis": {
+      "oneClick": false,
+      "allowElevation": true,
+      "allowToChangeInstallationDirectory": true,
+      "license": "LICENSE",
+      "deleteAppDataOnUninstall": true,
+      "artifactName": "${name}-v${version}-${channel}-${os}-${arch}-setup.${ext}"
+    },
+    "portable": {
+      "artifactName": "${name}-v${version}-${channel}-${os}-${arch}-portable.${ext}"
+    },
+    "files": [
+      "!.env"
+    ]
   }
 }

@@ -1,15 +1,32 @@
-
+const electron = require('electron').remote;
 // Define UI elements
 let ui = {
     timer: document.getElementById('timer'),
-    robotState: document.getElementById('robot-state').firstChild,
+    robotState: {
+        connectionPanel: document.getElementById('connection-panel'),
+        connection: document.getElementById('connection-display').firstChild,
+        modePanel: document.getElementById('mode-panel'),
+        modeIndicator: document.getElementById('mode-display')
+    },
     autoSelect: document.getElementById('auto-select'),
     autoConfirm: document.getElementById('auto-readout'),
-    camera: document.getElementById('camera')
+    camera: document.getElementById('camera'),
+    matchInfo: {
+        event: document.getElementById('mi-event-content'),
+        match: {
+            type: document.getElementById('mi-match-type-content'),
+            number: document.getElementById('mi-match-number-content')
+        }
+    },
+    batteryPanel: {
+        panel: document.getElementById('battery-panel'),
+        readout: document.getElementById('battery-readout'),
+    },
 };
+var blinkID, count;
 NetworkTables.putValue("/SmartDashboard/test", true);
 //Timer
-NetworkTables.addKeyListener('/robot/time', (key, value) => {
+NetworkTables.addKeyListener('/Robot/time', (key, value) => {
     // This is an example of how a dashboard could display the remaining time in a match.
     // We assume here that value is an integer representing the number of seconds left.
     ui.timer.innerHTML = value < 0 ? '0:00' : Math.floor(value / 60) + ':' + (value % 60 < 10 ? '0' : '') + value % 60;
@@ -50,11 +67,55 @@ NetworkTables.addKeyListener('/SmartDashboard/SelectedAuto', (key, value) => {
         ui.autoConfirm.style.backgroundColor = 'red';
     }
 });
-// Update NetworkTables when autonomous selector is changed
-ui.autoSelect.onchange = function() {
-    NetworkTables.putValue('/SmartDashboard/SelectedAuto', this.value);
-};
 
+ui.autoSelect.addEventListener('change', (event) => {
+    NetworkTables.putValue('/SmartDashboard/SelectedAuto', event.target.value);
+});
+
+NetworkTables.addKeyListener('/FMSInfo/EventName', (key, value) => {
+    ui.matchInfo.event.innerHTML = value;
+});
+NetworkTables.addKeyListener('/FMSInfo/MatchNumber', (key, value) => {
+    ui.matchInfo.match.number.innerHTML = value;
+});
+NetworkTables.addKeyListener('/FMSInfo/MatchType', (key, value) => {
+    let matchTypeString;
+    switch(value) {
+        case 1: matchTypeString = 'Practice'; break;
+        case 2: matchTypeString = 'Qualification'; break;
+        case 3: matchTypeString = 'Elimination'; break;
+        default: matchTypeString = 'Unknown'; break;
+    }
+    ui.matchInfo.match.type.innerHTML = matchTypeString + " ";
+});
+
+NetworkTables.addKeyListener('/Robot/BatteryVoltage', (key, value) => {
+    value = Number.parseFloat(value).toFixed(2);
+    ui.batteryPanel.readout.innerHTML = value;
+    let color;
+    if(value < 7) color = 'red';
+    else if(value < 10) color = 'yellow';
+    else color = 'green';
+    ui.batteryPanel.panel.style.color = color === 'yellow' ? 'black' : 'white';
+    ui.batteryPanel.panel.style.backgroundColor = color;
+});
+
+/*NetworkTables.addKeyListener("/Robot/Mode", (key, value) => {
+    let modeString;
+    switch(value) {
+        case 0: modeString = "Disabled"; break;
+        case 1: modeString = "Teleop Enabled"; break;
+        case 2: modeString = "Sandstorm Enabled"; break;
+        case 3: modeString = "Test Mode"; break;
+    }
+    if(modeString && modeString.length !== 0) {
+        ui.robotState.modeIndicator.innerHTML = modeString;
+    }
+});*/
 addEventListener('error',(ev)=>{
     ipc.send('windowError',{mesg:ev.message,file:ev.filename,lineNumber:ev.lineno})
+});
+
+addEventListener('keydown', evt => {
+    if(evt.key === 'w' && evt.ctrlKey) electron.getCurrentWindow().close();
 });

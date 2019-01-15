@@ -10,9 +10,16 @@
 <body>
     <div class="panel" id="timer">2:15</div>
     <div class="panel" id="status">
+        <h4 class="panel-title">Robot State</h4>
         <!-- Tells whether robot is connected to dashboard. -->
-        <div id="robot-state">Unknown state</div>
-        <button id="connect-button">Connect</button>
+        <div id="connection-panel" class="subpanel">
+            <div id="connection-display">Unknown state</div>
+            <button id="connect-button">Connect</button>
+        </div>
+        <!--div class="subpanel" id="mode-panel">
+            <p id="mode-display">Unknown Mode</p>
+        </div-->
+
     </div>
     <!-- You'll need to mess around with the CSS of #camera (found in css/style.css) to get it to work.
         More explanation in that CSS rule. -->
@@ -23,12 +30,12 @@
 
         <div class="subpanel" id="match-info">
             <h4 class="subpanel-title">Match Info</h4>
-
-
+            <div class="mi-field"><p><span class="mi-label">Event: </span><span class="mi-content" id="mi-event-content"></span></p></div>
+            <div class="mi-field"><p><span class="mi-label">Match: </span><span class="mi-content" id="mi-match-type-content"></span><span id="mi-match-number-content"></span></p></div>
         </div>
-        <div class="subpanel" id="battery-readout">
-            <text class="subpanel-title">Battery</text>
-
+        <div class="subpanel" id="battery-panel">
+            <h4 class="subpanel-title">Battery</h4>
+            <p id="battery-text"><span id="battery-readout">12</span> Volts</p>
         </div>
     </div>
     <!-- The sidebar of the dashboard. Designed for smaller control elements like selection boxes and small buttons. -->

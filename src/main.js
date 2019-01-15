@@ -1,16 +1,17 @@
 'use strict';
 Object.defineProperty(exports, '__esModule', { value: true });
 
+let result = require('dotenv').config();
+console.log(result);
 const electron = require('electron');
 const wpilib_NT = require('wpilib-nt-client');
 const client = new wpilib_NT.Client();
-
 // The client will try to reconnect after 1 second
 client.setReconnectDelay(1000);
 
 /** Module to control application life. */
 const app = electron.app;
-
+app.setAppUserModelId('com.pikerobodevils.2019dashboard');
 /** Module to create native browser window.*/
 const BrowserWindow = electron.BrowserWindow;
 
@@ -93,8 +94,13 @@ function createWindow() {
     ipc.on('windowError', (ev, error) => {
         console.log(error);
     });
+    ipc.on('console-log', (ev, msg) => {
+        console.log(msg);
+    });
+
     // Create the browser window.
     let screen = electron.screen.getPrimaryDisplay().workAreaSize;
+    let developmentMode = process.env.DEV === 'true';
     mainWindow = new BrowserWindow({
         width: screen.width,
         height: screen.height - 200,
@@ -102,7 +108,7 @@ function createWindow() {
         // It's best if the dashboard takes up as much space as possible without covering the DriverStation application.
         // The window is closed until the python server is ready
         show: false,
-        frame: true,
+        frame: developmentMode,
         icon: __dirname + '/../images/icon.png'
     });
     // Move window to top (left) of screen.
@@ -110,13 +116,16 @@ function createWindow() {
     // Load window.
     mainWindow.loadURL(`file://${__dirname}/index.html`);
     // Once the python server is ready, load window contents.
+    // Remove menu
+    if(developmentMode) {
+        mainWindow.setMenu(null);
+    }
     mainWindow.once('ready-to-show', () => {
         console.log('main window is ready to be shown');
         mainWindow.show();
     });
 
-    // Remove menu
-    mainWindow.setMenu(null);
+
     // Emitted when the window is closed.
     mainWindow.on('closed', () => {
         console.log('main window closed');
@@ -163,3 +172,4 @@ app.on('activate', function () {
     // dock icon is clicked and there are no other windows open.
     if (mainWindow == null) createWindow();
 });
+
