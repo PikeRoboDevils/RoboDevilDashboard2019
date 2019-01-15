@@ -1,6 +1,6 @@
 {
   "name": "robodevil-dashboard-2019",
-  "version": "0.1.0",
+  "version": "1.0.0",
   "description": "Robot control dashboard boilerplate for FRC.",
   "main": "src/main.js",
   "scripts": {
