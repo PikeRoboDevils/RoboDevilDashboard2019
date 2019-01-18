@@ -1,8 +1,6 @@
 'use strict';
 Object.defineProperty(exports, '__esModule', { value: true });
 
-let result = require('dotenv').config();
-console.log(result);
 const electron = require('electron');
 const wpilib_NT = require('wpilib-nt-client');
 const client = new wpilib_NT.Client();
@@ -100,7 +98,7 @@ function createWindow() {
 
     // Create the browser window.
     let screen = electron.screen.getPrimaryDisplay().workAreaSize;
-    let developmentMode = process.env.DEV === 'true';
+
     mainWindow = new BrowserWindow({
         width: screen.width,
         height: screen.height - 200,
@@ -108,7 +106,7 @@ function createWindow() {
         // It's best if the dashboard takes up as much space as possible without covering the DriverStation application.
         // The window is closed until the python server is ready
         show: false,
-        frame: developmentMode,
+        frame: !app.isPackaged,
         icon: __dirname + '/../images/icon.png'
     });
     // Move window to top (left) of screen.
@@ -117,7 +115,7 @@ function createWindow() {
     mainWindow.loadURL(`file://${__dirname}/index.html`);
     // Once the python server is ready, load window contents.
     // Remove menu
-    if(developmentMode) {
+    if(app.isPackaged) {
         mainWindow.setMenu(null);
     }
     mainWindow.once('ready-to-show', () => {
