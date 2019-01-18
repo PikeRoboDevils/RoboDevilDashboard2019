@@ -1,0 +1,14 @@
+language: node_js
+node_js:
+  - iojs
+
+deploy:
+  skip_cleanup: true
+  provider: releases
+  api_key:
+    secure: tkFFiXntwN02c3Ug+kW3c9hFMTlTYYTMQv2wlWx6orM2QRPhBaHdynV7qlJyZ4j2G2lYGy8ajAJd8fcd1aGjqQKSQjVraagGuPuw8dmVMrYAD4N9uatnCmTK1+XLOjFjIrWRxOBN6ieFPH8agcpz8gj5sfn63jxmQMXTly98TQJWRRBXEOPzAn1AuT+A2oUzlcRPaPYRViwqDPDbC06wJtB3x/knBIBqRk4WT1KTkBCIDx9XGN3H88GwnD1KmyqLx5t27uTofsgcmmgA3IlTG0c5sbU9jTCqe9RdFvLwzVboCmUcY2FVsXYoJ+7ZPRUHV/onFnKFVj0z2uKDn0om3Gh5EdaeCYV6XKyIc/d3TIiK+8IyGBAFAraHkaOmq8mxfVL2A53EQiXb4cuvIhbSz6RevWN1Dg48+6mmeZfNRUiUigY8US6neNY00foEIUWoaqtredtQV1I4SSEtL92fzV6n7HNJAFmK6HRBCknP3Wlko5NKUUEF/0zFoqml8gyPAwsclHylbLjbHkKjQ13vuvKJA4O3cUsN6KyT3dRIcogUnlM7r3IIbKUTpXkqRVFkzzbLsSG+SqQu5qZEnZui9SS6iJHyL+Tp3bpUZP1BjPd/S5KJqiFhPNHgS8OtVcontkNhxf+zOBGfExR+r1NFBINulyHEwrZkDXC5iRDqmLE=
+  file: dist/*.exe
+  file_glob: true
+  on:
+    repo: PikeRoboDevils/RoboDevilDashboard2019
+    tags: true
