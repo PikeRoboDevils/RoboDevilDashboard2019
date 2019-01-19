@@ -107,7 +107,7 @@ function createWindow() {
         // The window is closed until the python server is ready
         show: false,
         frame: !app.isPackaged,
-        icon: __dirname + '/../images/icon.png'
+        icon: __dirname + '/../images/logo.png'
     });
     // Move window to top (left) of screen.
     mainWindow.setPosition(0, 0);
