@@ -1,16 +1,15 @@
-# FRC Dashboard 2019
+# RoboDevil Dashboard 2019
 
 ## Setup
-You'll need [`nodejs`](https://nodejs.org) & [`npm`](https://npmjs.com).
+You'll need [`nodejs`](https://nodejs.org) & [`yarn`](https://yarnpkg.com).
 
 ```
-npm install
-npm start
+yarn install
+yarn start
 ```
 
-##Building
+## Building
 ```
-npm run package-win
+yarn dist
 ```
-
-Installer files coming soon
+Installers and standalone executables will be in `./dist`

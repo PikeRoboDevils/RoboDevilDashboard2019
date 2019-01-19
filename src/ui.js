@@ -4,9 +4,7 @@ let ui = {
     timer: document.getElementById('timer'),
     robotState: {
         connectionPanel: document.getElementById('connection-panel'),
-        connection: document.getElementById('connection-display').firstChild,
-        modePanel: document.getElementById('mode-panel'),
-        modeIndicator: document.getElementById('mode-display')
+        connection: document.getElementById('connection-display').firstChild
     },
     autoSelect: document.getElementById('auto-select'),
     autoConfirm: document.getElementById('auto-readout'),
@@ -23,10 +21,8 @@ let ui = {
         readout: document.getElementById('battery-readout'),
     },
 };
-var blinkID, count;
-NetworkTables.putValue("/SmartDashboard/test", true);
 //Timer
-NetworkTables.addKeyListener('/Robot/time', (key, value) => {
+NetworkTables.addKeyListener('/Robot/Time', (key, value) => {
     // This is an example of how a dashboard could display the remaining time in a match.
     // We assume here that value is an integer representing the number of seconds left.
     ui.timer.innerHTML = value < 0 ? '0:00' : Math.floor(value / 60) + ':' + (value % 60 < 10 ? '0' : '') + value % 60;
@@ -40,7 +36,7 @@ NetworkTables.addKeyListener('/SmartDashboard/StreamURL', (key, value) => {
 
 // Key Listeners
 // Load list of prewritten autonomous modes
-NetworkTables.addKeyListener('/SmartDashboard/AutoModes', (key, value) => {
+NetworkTables.addKeyListener('/SmartDashboard/Auto List', (key, value) => {
     // Clear previous list
     while (ui.autoSelect.firstChild) {
         ui.autoSelect.removeChild(ui.autoSelect.firstChild);
@@ -54,11 +50,11 @@ NetworkTables.addKeyListener('/SmartDashboard/AutoModes', (key, value) => {
         ui.autoSelect.appendChild(option);
     });
     // Set value to the already-selected mode. If there is none, nothing will happen.
-    ui.autoSelect.value = NetworkTables.getValue('/SmartDashboard/SelectedAuto');
+    ui.autoSelect.value = NetworkTables.getValue('/SmartDashboard/Selected Auto');
 });
 
 // Load list of prewritten autonomous modes
-NetworkTables.addKeyListener('/SmartDashboard/SelectedAuto', (key, value) => {
+NetworkTables.addKeyListener('/SmartDashboard/Selected Auto', (key, value) => {
     ui.autoConfirm.value = value;
     ui.autoSelect.value = value;
     if(ui.autoSelect.value == value) {
@@ -69,7 +65,7 @@ NetworkTables.addKeyListener('/SmartDashboard/SelectedAuto', (key, value) => {
 });
 
 ui.autoSelect.addEventListener('change', (event) => {
-    NetworkTables.putValue('/SmartDashboard/SelectedAuto', event.target.value);
+    NetworkTables.putValue('/SmartDashboard/Selected Auto', event.target.value);
 });
 
 NetworkTables.addKeyListener('/FMSInfo/EventName', (key, value) => {
