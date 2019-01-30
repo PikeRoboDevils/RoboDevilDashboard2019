@@ -3,6 +3,7 @@
     margin: 0;
     padding: 0;
 }
+
 ::-webkit-scrollbar {
     display: none;
 }
@@ -52,6 +53,14 @@ input[type="checkbox"] {
     overflow: scroll;
 }
 
+.tab-content {
+    padding: 7px;
+    border: solid black 1px;
+    position: relative;
+    overflow: scroll;
+    display: block;
+}
+
 .panel-title {
     font-size: 20px;
 }
@@ -63,6 +72,7 @@ input[type="checkbox"] {
     border-radius: 5px;
     margin: 7px 0px;
 }
+
 .subpanel > * {
     margin: 2px;
 }
@@ -70,6 +80,7 @@ input[type="checkbox"] {
 .subpanel-title {
     font-size: 18px;
 }
+
 . {
     display: block;
 }
@@ -96,14 +107,16 @@ input[type="checkbox"] {
     width: 20vw;
 }
 
-#sidebar {
+#dash-tabs {
     right: 0;
-    height: 100vh;
-    width: 20vw;
+    width: 40vw;
+    height: 100vw;
 }
+
 #auto-readout {
     cursor: default;
 }
+
 #camera {
     padding: 0;
     position: fixed;
@@ -118,12 +131,7 @@ input[type="checkbox"] {
     background-repeat: no-repeat;
     background-position: center;
 }
-#dash-body {
-    top: 0;
-    right: 20vw;
-    height: 100vh;
-    width: 20vw;
-}
+
 
 #login {
     position: fixed;
@@ -137,16 +145,20 @@ input[type="checkbox"] {
     bottom: 0;
     background-color: rgba(0, 0, 0, 0.8)
 }
+
 /* When body receives the login class, show login popup*/
 body.login #login {
     display: flex;
 }
+
 #login :disabled {
     opacity: 0.6;
 }
+
 #login > * {
     height: 40px;
 }
+
 #login > button {
     margin-left: 5px;
 }
@@ -164,7 +176,36 @@ body.login #login {
 #battery-text {
     font-size: 40px;
 }
-#connection-panel > *{
+
+#connection-panel > * {
     display: inline;
 }
+
+#tab-buttons {
+    display: block;
+}
+
+button.tab-button {
+    float: left;
+    border: 1px black solid;
+    border-radius: unset;
+    margin: 0px;
+}
+
+button.tab-button:hover {
+    background-color: #444;
+}
+
+button.tab-button[selected] {
+    background-color: #555;
+}
+
+.tab-content {
+    display: none;
+}
+
+.tab-content[selected] {
+    display: block;
+}
+
 
