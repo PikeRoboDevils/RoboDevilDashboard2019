@@ -22,6 +22,9 @@ let ui = {
         readout: document.getElementById('battery-readout'),
     },
 };
+ui.camera.setStreamURL = (url) => {
+    ui.camera.style.backgroundImage = `url('${url}'), url('../images/stream_not_found.png')`
+};
 //Timer
 NetworkTables.addKeyListener('/Robot/Time', (key, value) => {
     // This is an example of how a dashboard could display the remaining time in a match.
@@ -31,7 +34,7 @@ NetworkTables.addKeyListener('/Robot/Time', (key, value) => {
 
 //Camera stream updates
 NetworkTables.addKeyListener('/SmartDashboard/StreamURL', (key, value) => {
-    ui.camera.style.backgroundImage = `url('${value}'), url('../images/stream_not_found.png')`
+    ui.camera.setStreamURL(value);
 });
 
 
@@ -123,13 +126,23 @@ NetworkTables.addGlobalListener((key, value, isNew) => {
     updateStream(getStream(stream));
     updateStreamList();
 });
-let streams = new Map();
+let streamList = new Map();
+ui.cameraSelector.getSelectedStream = () => {
+    return streamList.get(ui.cameraSelector.value);
+};
+
+ui.cameraSelector.addEventListener('change', () => {
+    let streamUrl = ui.cameraSelector.getSelectedStream().streams[0];
+    if(typeof streamUrl != 'undefined') {
+        ui.camera.setStreamURL(streamUrl);
+    }
+});
 let updateStream = (streamToUpdate) => {
-    streams.set(streamToUpdate.id, streamToUpdate);
+    streamList.set(streamToUpdate.id, streamToUpdate);
 };
 let updateStreamList = () => {
     while(ui.cameraSelector.firstChild) ui.cameraSelector.removeChild(ui.cameraSelector.firstChild);
-    streams.forEach((stream, id) => {
+    streamList.forEach((stream, id) => {
         let option = document.createElement('option');
         option.text = id;
         ui.cameraSelector.add(option);
