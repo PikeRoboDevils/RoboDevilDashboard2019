@@ -45,7 +45,7 @@ NetworkTables.addKeyListener('/SmartDashboard/Auto List', (key, value) => {
     // Make an option for each autonomous mode and put it in the selector
     if(value.length < 1) value[0] = "No auto modes found";
     value.forEach((mode) => {
-        var option = document.createElement('option');
+        let option = document.createElement('option');
         option.appendChild(document.createTextNode(mode));
         ui.autoSelect.appendChild(option);
     });
@@ -115,3 +115,29 @@ addEventListener('error',(ev)=>{
 addEventListener('keydown', evt => {
     if(evt.key === 'w' && evt.ctrlKey) electron.getCurrentWindow().close();
 });
+
+NetworkTables.addGlobalListener((key, value, isNew) => {
+    if (!key.startsWith('/CameraPublisher')) return;
+    let stream = key.split('/')[2];
+    updateStreams(getStream(stream))
+});
+let streams = new Map();
+let updateStreams = (streamToUpdate) => {
+    streams.set(streamToUpdate.id, streamToUpdate);
+};
+
+let getStream = (id) => {
+    return {
+        id: id,
+        //https://github.com/wpilibsuite/allwpilib/blob/master/cameraserver/src/main/java/edu/wpi/first/cameraserver/CameraServer.java#L303
+        source: getStreamSubKey(id, 'source', ''),
+        streams: getStreamSubKey(id, 'streams', []),
+        description: getStreamSubKey(id, 'description', ''),
+        connected: getStreamSubKey(id, 'connected', false),
+        mode: getStreamSubKey(id, "mode", ""),
+        availableModes: getStreamSubKey(id, "modes", [])
+    };
+};
+let getStreamSubKey = (id, key, defaultVal) => {
+    return NetworkTables.getValue(`/CameraPublisher/${id}/${key}`, defaultVal);
+};
