@@ -26,7 +26,7 @@ onkeydown = key => {
  * @param {boolean} connected
  */
 function onRobotConnection(connected) {
-    var state = connected ? 'Robot connected!' : 'Robot disconnected.';
+    let state = connected ? 'Robot connected!' : 'Robot disconnected.';
     console.log(state);
     ui.robotState.connection.textContent = state;
     buttonConnect.onclick = () => {

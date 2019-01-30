@@ -99,7 +99,7 @@ input[type="checkbox"] {
     width: 20vw;
 }
 
-#dash-tabs {
+#tab-view {
     right: 0;
     width: 40vw;
     height: 100vw;
@@ -119,11 +119,17 @@ input[type="checkbox"] {
     width: 60vw;
     height: 80vh;
     overflow: hidden;
-    background-color: #333;
+    background-color: #444;
     /* You'll need to mess with this a bit to get your camera to work. Replace the url with a live-updating image feed from your camera. Using other camera streaming systems will require some tweaking. */
     background-image: url("../../images/stream_not_found.png");
     background-repeat: no-repeat;
     background-position: center;
+}
+#camera-select {
+    border-radius: 0;
+    position: relative;
+    float: right;
+    width: 50%;
 }
 
 
@@ -178,12 +184,11 @@ body.login #login {
 #tab-buttons {
     position: relative;
     width: 100%;
-    height: 5vh;
+    height: fit-content;
     display: block;
 }
 
 button.tab-button {
-    height: 100%;
     font-size: 17px;
     float: left;
     margin: 5px 0px 0px;
@@ -203,7 +208,6 @@ button.tab-button[selected] {
 .tab-content {
     position: relative;
     width: 100%;
-    height: 95%;
     display: none;
     padding: 7px;
     border: solid black 1px;

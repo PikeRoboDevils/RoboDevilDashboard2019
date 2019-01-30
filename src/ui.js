@@ -9,6 +9,7 @@ let ui = {
     autoSelect: document.getElementById('auto-select'),
     autoConfirm: document.getElementById('auto-readout'),
     camera: document.getElementById('camera'),
+    cameraSelector: document.getElementById('camera-select'),
     matchInfo: {
         event: document.getElementById('mi-event-content'),
         match: {
@@ -21,6 +22,9 @@ let ui = {
         readout: document.getElementById('battery-readout'),
     },
 };
+ui.camera.setStreamURL = (url) => {
+    ui.camera.style.backgroundImage = `url(${url}), url('../images/stream_not_found.png')`
+};
 //Timer
 NetworkTables.addKeyListener('/Robot/Time', (key, value) => {
     // This is an example of how a dashboard could display the remaining time in a match.
@@ -30,7 +34,7 @@ NetworkTables.addKeyListener('/Robot/Time', (key, value) => {
 
 //Camera stream updates
 NetworkTables.addKeyListener('/SmartDashboard/StreamURL', (key, value) => {
-    ui.camera.style.backgroundImage = `url('${value}'), url('../images/stream_not_found.png')`
+    ui.camera.setStreamURL(value);
 });
 
 
@@ -45,7 +49,7 @@ NetworkTables.addKeyListener('/SmartDashboard/Auto List', (key, value) => {
     // Make an option for each autonomous mode and put it in the selector
     if(value.length < 1) value[0] = "No auto modes found";
     value.forEach((mode) => {
-        var option = document.createElement('option');
+        let option = document.createElement('option');
         option.appendChild(document.createTextNode(mode));
         ui.autoSelect.appendChild(option);
     });
@@ -115,3 +119,48 @@ addEventListener('error',(ev)=>{
 addEventListener('keydown', evt => {
     if(evt.key === 'w' && evt.ctrlKey) electron.getCurrentWindow().close();
 });
+
+NetworkTables.addGlobalListener((key, value, isNew) => {
+    if (!key.startsWith('/CameraPublisher') || !isNew) return;
+    let stream = key.split('/')[2];
+    updateStream(getStream(stream));
+    updateStreamList();
+});
+let streamList = new Map();
+ui.cameraSelector.getSelectedStream = () => {
+    return streamList.get(ui.cameraSelector.value);
+};
+
+ui.cameraSelector.addEventListener('change', () => {
+    let streamUrl = ui.cameraSelector.getSelectedStream().streams[0];
+    if(typeof streamUrl != 'undefined') {
+        ui.camera.setStreamURL(streamUrl);
+    }
+});
+let updateStream = (streamToUpdate) => {
+    streamList.set(streamToUpdate.id, streamToUpdate);
+};
+let updateStreamList = () => {
+    while(ui.cameraSelector.firstChild) ui.cameraSelector.removeChild(ui.cameraSelector.firstChild);
+    streamList.forEach((stream, id) => {
+        let option = document.createElement('option');
+        option.text = id;
+        ui.cameraSelector.add(option);
+    })
+};
+
+let getStream = (id) => {
+    return {
+        id: id,
+        //https://github.com/wpilibsuite/allwpilib/blob/master/cameraserver/src/main/java/edu/wpi/first/cameraserver/CameraServer.java#L303
+        source: getStreamSubKey(id, 'source', ''),
+        streams: getStreamSubKey(id, 'streams', []),
+        description: getStreamSubKey(id, 'description', ''),
+        connected: getStreamSubKey(id, 'connected', false),
+        mode: getStreamSubKey(id, 'mode', ''),
+        availableModes: getStreamSubKey(id, 'modes', [])
+    };
+};
+let getStreamSubKey = (id, key, defaultVal) => {
+    return NetworkTables.getValue(`/CameraPublisher/${id}/${key}`, defaultVal);
+};

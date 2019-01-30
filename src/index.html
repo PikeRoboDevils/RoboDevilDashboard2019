@@ -23,9 +23,13 @@
     </div>
     <!-- You'll need to mess around with the CSS of #camera (found in css/style.css) to get it to work.
         More explanation in that CSS rule. -->
-    <div class="panel" id="camera"></div>
+    <div class="panel" id="camera">
+        <select id="camera-select">
+            <option>No streams available</option>
+        </select>
+    </div>
 
-    <div class="panel" id="dash-tabs">
+    <div class="panel" id="tab-view">
         <div id="tab-buttons">
             <button class="tab-button" id="pre-match">Pre-match</button>
             <button class="tab-button" id="match-view">Match View</button>
