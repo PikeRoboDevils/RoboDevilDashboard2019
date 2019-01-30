@@ -9,6 +9,7 @@ let ui = {
     autoSelect: document.getElementById('auto-select'),
     autoConfirm: document.getElementById('auto-readout'),
     camera: document.getElementById('camera'),
+    cameraSelector: document.getElementById('camera-select'),
     matchInfo: {
         event: document.getElementById('mi-event-content'),
         match: {
@@ -117,13 +118,22 @@ addEventListener('keydown', evt => {
 });
 
 NetworkTables.addGlobalListener((key, value, isNew) => {
-    if (!key.startsWith('/CameraPublisher')) return;
+    if (!key.startsWith('/CameraPublisher') || !isNew) return;
     let stream = key.split('/')[2];
-    updateStreams(getStream(stream))
+    updateStream(getStream(stream));
+    updateStreamList();
 });
 let streams = new Map();
-let updateStreams = (streamToUpdate) => {
+let updateStream = (streamToUpdate) => {
     streams.set(streamToUpdate.id, streamToUpdate);
+};
+let updateStreamList = () => {
+    while(ui.cameraSelector.firstChild) ui.cameraSelector.removeChild(ui.cameraSelector.firstChild);
+    streams.forEach((stream, id) => {
+        let option = document.createElement('option');
+        option.text = id;
+        ui.cameraSelector.add(option);
+    })
 };
 
 let getStream = (id) => {
@@ -134,8 +144,8 @@ let getStream = (id) => {
         streams: getStreamSubKey(id, 'streams', []),
         description: getStreamSubKey(id, 'description', ''),
         connected: getStreamSubKey(id, 'connected', false),
-        mode: getStreamSubKey(id, "mode", ""),
-        availableModes: getStreamSubKey(id, "modes", [])
+        mode: getStreamSubKey(id, 'mode', ''),
+        availableModes: getStreamSubKey(id, 'modes', [])
     };
 };
 let getStreamSubKey = (id, key, defaultVal) => {
