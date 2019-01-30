@@ -23,7 +23,7 @@ let ui = {
     },
 };
 ui.camera.setStreamURL = (url) => {
-    ui.camera.style.backgroundImage = `url('${url}'), url('../images/stream_not_found.png')`
+    ui.camera.style.backgroundImage = `url(${url}), url('../images/stream_not_found.png')`
 };
 //Timer
 NetworkTables.addKeyListener('/Robot/Time', (key, value) => {
