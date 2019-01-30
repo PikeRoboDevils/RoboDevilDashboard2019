@@ -53,14 +53,6 @@ input[type="checkbox"] {
     overflow: scroll;
 }
 
-.tab-content {
-    padding: 7px;
-    border: solid black 1px;
-    position: relative;
-    overflow: scroll;
-    display: block;
-}
-
 .panel-title {
     font-size: 20px;
 }
@@ -111,6 +103,7 @@ input[type="checkbox"] {
     right: 0;
     width: 40vw;
     height: 100vw;
+    position: fixed;
 }
 
 #auto-readout {
@@ -182,10 +175,17 @@ body.login #login {
 }
 
 #tab-buttons {
+    position: fixed;
+    top: 0;
+    right: 0;
+    width: 40vw;
+    height: 5vh;
     display: block;
 }
 
 button.tab-button {
+    height: 100%;
+    font-size: 17px;
     float: left;
     border: 1px black solid;
     border-radius: unset;
@@ -201,7 +201,15 @@ button.tab-button[selected] {
 }
 
 .tab-content {
+    top: 5vh;
+    right: 0;
+    width: 40vw;
+    height: 95vh;
     display: none;
+    padding: 7px;
+    border: solid black 1px;
+    position: fixed;
+    overflow: scroll;
 }
 
 .tab-content[selected] {
