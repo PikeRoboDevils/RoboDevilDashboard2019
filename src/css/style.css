@@ -114,6 +114,7 @@ input[type="checkbox"] {
 #camera {
     padding: 0;
     position: fixed;
+    z-index: 10;
     bottom: 0;
     left: 0;
     width: 60vw;
@@ -135,6 +136,7 @@ input[type="checkbox"] {
 
 #login {
     position: fixed;
+    z-index: 20;
     display: none;
     flex-direction: row;
     justify-content: center;
