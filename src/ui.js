@@ -187,3 +187,17 @@ addEventListener('error', (ev) => {
 addEventListener('keydown', evt => {
     if (evt.key === 'w' && evt.ctrlKey) electron.getCurrentWindow().close();
 });
+
+let fullScreen = false;
+
+ui.camera.addEventListener('dblclick', () => {
+    if(fullScreen) {
+        ui.camera.style.width = '60vw';
+        ui.camera.style.height = '80vh';
+        fullScreen = false;
+    } else {
+        ui.camera.style.width = '100vw';
+        ui.camera.style.height = '100vh';
+        fullScreen = true;
+    }
+});
