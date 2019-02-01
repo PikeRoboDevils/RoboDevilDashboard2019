@@ -220,4 +220,20 @@ button.tab-button[selected] {
     display: block;
 }
 
+#battery-panel[good] {
+    background-color: green;
+    color: white;
+}
+#battery-panel[warning] {
+    background-color: yellow;
+    color: black;
+}
+#battery-panel[low] {
+    background-color: red;
+    color: black;
+}
+#battery-panel {
+    transition: 0.2s;
+}
+
 

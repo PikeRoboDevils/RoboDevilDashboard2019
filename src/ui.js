@@ -106,14 +106,16 @@ NetworkTables.addKeyListener('/FMSInfo/MatchType', (key, value) => {
 });
 
 NetworkTables.addKeyListener('/Robot/BatteryVoltage', (key, value) => {
+    ['low', 'warning', 'good'].forEach(it => {
+        ui.batteryPanel.panel.removeAttribute(it)
+    });
     value = Number.parseFloat(value).toFixed(2);
     ui.batteryPanel.readout.innerHTML = value;
-    let color;
-    if (value < 7) color = 'red';
-    else if (value < 10) color = 'yellow';
-    else color = 'green';
-    ui.batteryPanel.panel.style.color = color === 'yellow' ? 'black' : 'white';
-    ui.batteryPanel.panel.style.backgroundColor = color;
+    let state;
+    if (value < 7) state = 'low';
+    else if (value < 10) state = 'warning';
+    else state = 'good';
+    ui.batteryPanel.panel.toggleAttribute(state)
 });
 
 /*NetworkTables.addKeyListener("/Robot/Mode", (key, value) => {
