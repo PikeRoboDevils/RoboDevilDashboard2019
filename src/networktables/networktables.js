@@ -65,6 +65,9 @@ var NetworkTables =
         function d3_map_unescape(key) {
             return (key += '')[0] === d3_map_zero ? decodeURIComponent(key.slice(1)) : decodeURIComponent(key);
         }
+        function parseKey(key) {
+            return `/${key}/`.replace(/\/\/+/g, '/').replace(/\/+$/g, '');
+        }
         return {
             /**
              * Sets a function to be called when the robot connects/disconnects to the pynetworktables2js server via NetworkTables. It will also be called when the websocket connects/disconnects.
@@ -105,6 +108,7 @@ var NetworkTables =
             addKeyListener(key, f, immediateNotify) {
                 if(typeof key != 'string' || typeof f != 'function') return new Error('Valid Arguments are (string, function)')
 
+                key = parseKey(key);
                 if (typeof keyListeners[key] != 'undefined') {
                     keyListeners[key].push(f);
                 }
@@ -123,6 +127,7 @@ var NetworkTables =
              */
             containsKey(key) {
                 if(typeof f != 'string') return false
+                key = parseKey(key);
                 return key in keys;
             },
             /**
@@ -140,7 +145,7 @@ var NetworkTables =
              */
             getValue(key, defaultValue) {
                 if(typeof key != 'string') return new Error('Invalid Argument')
-
+                key = parseKey(key);
                 if (typeof keys[key] != 'undefined') {
                     return keys[key].val;
                 }
@@ -168,7 +173,7 @@ var NetworkTables =
              */
             putValue(key, value) {
                 if(typeof key != 'string') return new Error('Invalid Argument')
-
+                key = parseKey(key)
                 if (typeof keys[key] != 'undefined') {
                     keys[key].val = value;
                     ipc.send('update', { key, val: value, id: keys[key].id, flags: keys[key].flags });

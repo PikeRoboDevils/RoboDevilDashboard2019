@@ -23,35 +23,53 @@
     </div>
     <!-- You'll need to mess around with the CSS of #camera (found in css/style.css) to get it to work.
         More explanation in that CSS rule. -->
-    <div class="panel" id="camera"></div>
+    <div class="panel" id="camera">
+        <select id="camera-select">
+            <option>No streams available</option>
+        </select>
+    </div>
 
-    <div class="panel" id="dash-body">
-        <h4 class="panel-title">1018 Dashboard</h4>
-
-        <div class="subpanel" id="match-info">
-            <h4 class="subpanel-title">Match Info</h4>
-            <div class="mi-field"><p><span class="mi-label">Event: </span><span class="mi-content" id="mi-event-content"></span></p></div>
-            <div class="mi-field"><p><span class="mi-label">Match: </span><span class="mi-content" id="mi-match-type-content"></span><span id="mi-match-number-content"></span></p></div>
+    <div class="panel" id="tab-view">
+        <div id="tab-buttons">
+            <button class="tab-button" id="pre-match">Pre-match</button>
+            <button class="tab-button" id="match-view">Match View</button>
+            <button class="tab-button" id="diagnostic">Diagnostic</button>
         </div>
-        <div class="subpanel" id="battery-panel">
-            <h4 class="subpanel-title">Battery</h4>
-            <p id="battery-text"><span id="battery-readout">12</span> Volts</p>
+        <div id="tab-panels">
+            <div class="tab-content" id="pre-match-content">
+                <h4 class="panel-title">Robot Configuration</h4>
+                <div class="subpanel" id="auto-selection-container">
+                    <h4 class="subpanel-title">Autonomous Selection</h4>
+                    <select id="auto-select">
+                        <option>No auto modes found</option>
+                        <!-- This gets populated by JS -->
+                    </select>
+                    <h4 class="subpanel-title">Selected Auto</h4>
+                    <input type="text" id="auto-readout" disabled>
+                </div>
+            </div>
+            <div class="tab-content" id="match-view-content">
+                <h4 class="panel-title">Match View</h4>
+
+                <div class="subpanel" id="match-info">
+                    <h4 class="subpanel-title">Match Info</h4>
+                    <div class="mi-field"><p><span class="mi-label">Event: </span><span class="mi-content" id="mi-event-content"></span></p></div>
+                    <div class="mi-field"><p><span class="mi-label">Match: </span><span class="mi-content" id="mi-match-type-content"></span><span id="mi-match-number-content"></span></p></div>
+                </div>
+                <div class="subpanel" id="battery-panel">
+                    <h4 class="subpanel-title">Battery</h4>
+                    <p id="battery-text"><span id="battery-readout">12</span> Volts</p>
+                </div>
+            </div>
+            <div class="tab-content" id="diagnostic-content">
+                <h4 class="panel-title">Diagnostics</h4>
+
+                <div class="subpanel">
+                    <h4 class="subpanel-title">Motor Values</h4>
+                </div>
+            </div>
         </div>
     </div>
-    <!-- The sidebar of the dashboard. Designed for smaller control elements like selection boxes and small buttons. -->
-    <aside class="panel" id="sidebar">
-        <h4 class="panel-title">Robot Configuration</h4>
-        <div class="subpanel" id="auto-selection-container">
-            <h4 class="subpanel-title">Autonomous Selection</h4>
-            <select id="auto-select">
-                <option>No auto modes found</option>
-                <!-- This gets populated by JS -->
-            </select>
-            <h4 class="subpanel-title">Selected Auto</h4>
-            <input type="text" id="auto-readout" disabled>
-        </div>
-        <img class="subpanel" id="team-logo" src="../images/1018_logo.svg">
-    </aside>
     <div id="login">
         <input id="connect-address" type="text" value="localhost" disabled>
         <button id="connect" disabled>Connecting</button>
@@ -59,6 +77,7 @@
     <script src="networktables/networktables.js"></script>
     <script src="connection.js"></script>
     <script src="ui.js"></script>
+    <script src="tabs.js"></script>
 </body>
 
 </html>

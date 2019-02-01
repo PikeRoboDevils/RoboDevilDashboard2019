@@ -3,6 +3,7 @@
     margin: 0;
     padding: 0;
 }
+
 ::-webkit-scrollbar {
     display: none;
 }
@@ -63,6 +64,7 @@ input[type="checkbox"] {
     border-radius: 5px;
     margin: 7px 0px;
 }
+
 .subpanel > * {
     margin: 2px;
 }
@@ -70,6 +72,7 @@ input[type="checkbox"] {
 .subpanel-title {
     font-size: 18px;
 }
+
 . {
     display: block;
 }
@@ -96,37 +99,44 @@ input[type="checkbox"] {
     width: 20vw;
 }
 
-#sidebar {
+#tab-view {
     right: 0;
-    height: 100vh;
-    width: 20vw;
+    width: 40vw;
+    height: 100vw;
+    position: fixed;
+    padding: 0;
 }
+
 #auto-readout {
     cursor: default;
 }
+
 #camera {
     padding: 0;
     position: fixed;
+    z-index: 10;
     bottom: 0;
     left: 0;
     width: 60vw;
     height: 80vh;
     overflow: hidden;
-    background-color: #333;
+    background-color: #444;
     /* You'll need to mess with this a bit to get your camera to work. Replace the url with a live-updating image feed from your camera. Using other camera streaming systems will require some tweaking. */
     background-image: url("../../images/stream_not_found.png");
     background-repeat: no-repeat;
     background-position: center;
 }
-#dash-body {
-    top: 0;
-    right: 20vw;
-    height: 100vh;
-    width: 20vw;
+#camera-select {
+    border-radius: 0;
+    position: relative;
+    float: right;
+    width: 50%;
 }
+
 
 #login {
     position: fixed;
+    z-index: 20;
     display: none;
     flex-direction: row;
     justify-content: center;
@@ -137,16 +147,20 @@ input[type="checkbox"] {
     bottom: 0;
     background-color: rgba(0, 0, 0, 0.8)
 }
+
 /* When body receives the login class, show login popup*/
 body.login #login {
     display: flex;
 }
+
 #login :disabled {
     opacity: 0.6;
 }
+
 #login > * {
     height: 40px;
 }
+
 #login > button {
     margin-left: 5px;
 }
@@ -164,7 +178,46 @@ body.login #login {
 #battery-text {
     font-size: 40px;
 }
-#connection-panel > *{
+
+#connection-panel > * {
     display: inline;
 }
+
+#tab-buttons {
+    position: relative;
+    width: 100%;
+    height: fit-content;
+    display: block;
+}
+
+button.tab-button {
+    font-size: 17px;
+    float: left;
+    margin: 5px 0px 0px;
+    border-left: solid black 1px;
+    border-right: solid black 1px;
+    border-radius: 10px 10px 0 0;
+}
+
+button.tab-button:hover {
+    background-color: #444;
+}
+
+button.tab-button[selected] {
+    background-color: #555;
+}
+
+.tab-content {
+    position: relative;
+    width: 100%;
+    display: none;
+    padding: 7px;
+    border: solid black 1px;
+    overflow: scroll;
+}
+
+.tab-content[selected] {
+    display: block;
+}
+
 

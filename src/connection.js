@@ -26,7 +26,7 @@ onkeydown = key => {
  * @param {boolean} connected
  */
 function onRobotConnection(connected) {
-    var state = connected ? 'Robot connected!' : 'Robot disconnected.';
+    let state = connected ? 'Robot connected!' : 'Robot disconnected.';
     console.log(state);
     ui.robotState.connection.textContent = state;
     buttonConnect.onclick = () => {
@@ -47,9 +47,8 @@ function setLogin() {
     address.disabled = connect.disabled = false;
     connect.textContent = 'Connect';
     // Add the default address and select xxxx
-    address.value = 'roborio-1018-frc.local';
+    address.value = '10.10.18.2';
     address.focus();
-    address.setSelectionRange(8, 12);
 }
 // On click try to connect and disable the input and the button
 connect.onclick = () => {
