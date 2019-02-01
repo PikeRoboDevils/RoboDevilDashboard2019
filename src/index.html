@@ -34,6 +34,7 @@
             <button class="tab-button" id="pre-match">Pre-match</button>
             <button class="tab-button" id="match-view">Match View</button>
             <button class="tab-button" id="diagnostic">Diagnostic</button>
+            <button class="tab-button" id="nt">NetworkTables</button>
         </div>
         <div id="tab-panels">
             <div class="tab-content" id="pre-match-content">
@@ -68,6 +69,17 @@
                     <h4 class="subpanel-title">Motor Values</h4>
                 </div>
             </div>
+            <div class="tab-content" id="nt-content">
+                <h4 class="panel-title">NetworkTables</h4>
+                <div class="subpanel">
+                    <div id="nt-list">
+                        <input type="text" placeholder="Property" id="name">
+                        <input type="text" placeholder="Value" id="value">
+                        <button id="set">Set</button>
+                        <button id="get">Get</button>
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
     <div id="login">
@@ -78,6 +90,7 @@
     <script src="connection.js"></script>
     <script src="ui.js"></script>
     <script src="tabs.js"></script>
+    <script src="NTViewer.js"></script>
 </body>
 
 </html>
