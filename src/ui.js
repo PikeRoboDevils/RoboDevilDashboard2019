@@ -58,18 +58,27 @@ NetworkTables.addKeyListener('/SmartDashboard/Auto List', (key, value) => {
 
 // Load list of prewritten autonomous modes
 NetworkTables.addKeyListener('/SmartDashboard/Selected Auto', (key, value) => {
-    ui.autoConfirm.value = value;
     ui.autoSelect.value = value;
-    if (ui.autoSelect.value == value) {
+    updateAutoConfirmation()
+});
+
+NetworkTables.addKeyListener('/SmartDashboard/Auto Confirmation', (key, value) => {
+    ui.autoConfirm.value = value;
+    updateAutoConfirmation()
+});
+ui.autoSelect.addEventListener('change', (event) => {
+    console.log('change');
+    NetworkTables.putValue('/SmartDashboard/Selected Auto', event.target.value);
+    updateAutoConfirmation();
+});
+let updateAutoConfirmation = () => {
+    if (ui.autoSelect.value === ui.autoConfirm.value) {
         ui.autoConfirm.style.backgroundColor = 'green';
     } else {
         ui.autoConfirm.style.backgroundColor = 'red';
     }
-});
 
-ui.autoSelect.addEventListener('change', (event) => {
-    NetworkTables.putValue('/SmartDashboard/Selected Auto', event.target.value);
-});
+};
 NetworkTables.addKeyListener('/FMSInfo/EventName', (key, value) => {
     ui.matchInfo.event.innerHTML = value;
 });
@@ -191,7 +200,7 @@ addEventListener('keydown', evt => {
 let fullScreen = false;
 
 ui.camera.addEventListener('dblclick', () => {
-    if(fullScreen) {
+    if (fullScreen) {
         ui.camera.style.width = '60vw';
         ui.camera.style.height = '80vh';
         fullScreen = false;
