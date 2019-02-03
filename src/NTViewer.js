@@ -1,11 +1,10 @@
 // Create aliases for various ODM elements relating to tuning.
 ui.tuning = {
     list: document.getElementById('nt-list'),
-    button: document.getElementById('tuning-button'),
-    name: document.getElementById('name'),
-    value: document.getElementById('value'),
-    set: document.getElementById('set'),
-    get: document.getElementById('get')
+    name: document.getElementById('nt-name'),
+    value: document.getElementById('nt-value'),
+    set: document.getElementById('nt-set'),
+    get: document.getElementById('nt-get')
 };
 
 // Sets function to be called when any NetworkTables key/value changes
