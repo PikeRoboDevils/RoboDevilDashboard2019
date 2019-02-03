@@ -15,8 +15,7 @@ function onValueChanged(key, value, isNew) {
     // Sometimes, NetworkTables will pass booleans as strings. This corrects for that.
     if (value == 'true') {
         value = true;
-    }
-    else if (value == 'false') {
+    } else if (value == 'false') {
         value = false;
     }
     // The following code manages tuning section of the interface.
@@ -45,15 +44,13 @@ function onValueChanged(key, value, isNew) {
                     // For booleans, send bool of whether or not checkbox is checked
                     NetworkTables.putValue(key, this.checked);
                 };
-            }
-            else if (!isNaN(value)) {
+            } else if (!isNaN(value)) {
                 input.type = 'number';
                 input.onchange = function () {
                     // For number values, send value of input as an int.
                     NetworkTables.putValue(key, parseInt(this.value));
                 };
-            }
-            else {
+            } else {
                 input.type = 'text';
                 input.onchange = function () {
                     // For normal text values, just send the value.
@@ -63,30 +60,25 @@ function onValueChanged(key, value, isNew) {
             // Put the input into the div.
             div.appendChild(input);
         }
-    }
-    else {
+    } else {
         // Find already-existing input for changing this variable
         var oldInput = document.getElementsByName(propName)[0];
         if (oldInput) {
             if (oldInput.type === 'checkbox') {
                 oldInput.checked = value;
-            }
-            else {
+            } else {
                 oldInput.value = value;
             }
-        }
-        else {
-            console.log('Error: Non-new variable ' + key + ' not present in tuning list!');
         }
     }
 }
 
 // Manages get and set buttons at the top of the tuning pane
-ui.tuning.set.onclick = function() {
+ui.tuning.set.onclick = function () {
     if (ui.tuning.name.value && ui.tuning.value.value) { // Make sure the inputs have content
         NetworkTables.putValue('/SmartDashboard/' + ui.tuning.name.value, ui.tuning.value.value);
     }
 };
-ui.tuning.get.onclick = function() {
+ui.tuning.get.onclick = function () {
     ui.tuning.value.value = NetworkTables.getValue(ui.tuning.name.value);
 };

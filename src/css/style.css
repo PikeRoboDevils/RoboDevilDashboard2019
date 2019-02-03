@@ -129,6 +129,7 @@ button:hover, select:hover, input:hover {
     background-image: url("../../images/stream_not_found.png");
     background-repeat: no-repeat;
     background-position: center;
+    background-size: contain;
 }
 #camera-select {
     border-radius: 0;

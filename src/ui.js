@@ -23,6 +23,7 @@ let ui = {
     },
 };
 ui.camera.setStreamURL = (url) => {
+    url = url.replace('mjpg:', '');
     ui.camera.style.backgroundImage = `url(${url}), url('../images/stream_not_found.png')`
 };
 let streamList = new Map();
@@ -44,7 +45,6 @@ NetworkTables.addKeyListener('/SmartDashboard/Auto List', (key, value) => {
     while (ui.autoSelect.firstChild) {
         ui.autoSelect.removeChild(ui.autoSelect.firstChild);
     }
-    console.log(value.length);
     // Make an option for each autonomous mode and put it in the selector
     if (value.length < 1) value[0] = "No auto modes found";
     value.forEach((mode) => {
@@ -67,7 +67,6 @@ NetworkTables.addKeyListener('/SmartDashboard/Auto Confirmation', (key, value) =
     updateAutoConfirmation()
 });
 ui.autoSelect.addEventListener('change', (event) => {
-    console.log('change');
     NetworkTables.putValue('/SmartDashboard/Selected Auto', event.target.value);
     updateAutoConfirmation();
 });
@@ -132,7 +131,6 @@ NetworkTables.addKeyListener('/Robot/BatteryVoltage', (key, value) => {
 });*/
 
 NetworkTables.addGlobalListener((key, value, isNew) => {
-    console.log(key);
     if (!key.startsWith('/CameraPublisher')) return;
     let stream = key.split('/')[2];
     updateStream(getStream(stream));
